@@ -1,0 +1,43 @@
+import random
+
+# Dataset
+data = [3, 7, 4, 8, 6, 20, 22, 19, 25, 24, 5, 9, 23, 21, 2, 10, 26, 1, 18, 17]
+
+# Fixing seed for reproducibility
+random.seed(42)
+
+# Random initial means
+mean1 = random.choice(data)
+mean2 = random.choice(data)
+
+iteration = 0
+
+while True:
+    iteration += 1
+    cluster1 = []
+    cluster2 = []
+
+    # Assign each point to nearest mean
+    for point in data:
+        if abs(point - mean1) < abs(point - mean2):
+            cluster1.append(point)
+        else:
+            cluster2.append(point)
+
+    # Compute new means
+    new_mean1 = sum(cluster1) / len(cluster1)
+    new_mean2 = sum(cluster2) / len(cluster2)
+
+    # Print iteration results
+    print(f"Iteration {iteration}")
+    print("Cluster 1:", cluster1, " Mean1:", round(new_mean1, 2))
+    print("Cluster 2:", cluster2, " Mean2:", round(new_mean2, 2))
+    print("")
+
+    # Check for convergence (means don’t change anymore)
+    if round(new_mean1, 2) == round(mean1, 2) and round(new_mean2, 2) == round(mean2, 2):
+        break
+
+    # Update means
+    mean1 = new_mean1
+    mean2 = new_mean2
